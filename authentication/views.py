@@ -11,7 +11,7 @@ class GoogleLoginView(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
 
 
-class UserViewSet(viewsets.GenericViewSet):
+class UserViewSet(viewsets.ViewSet):
     lookup_field = 'username'
     queryset = User.objects.all()
     serializer_class = UserSerializer
