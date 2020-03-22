@@ -28,6 +28,5 @@ class UserViewSet(viewsets.ModelViewSet):
 
         if self.request.method == 'GET':
             return [permissions.IsAuthenticated()]
-
-        return [permissions.IsAuthenticated(), IsAccountOwner(),]
+    
 
