@@ -1,6 +1,7 @@
 djangorestframework==3.11.0
-django-rest-auth
-django-allauth
+django-rest-auth==0.41.0
+django-allauth==0.9.5
+django-cors-headers==3.2.1
 asgiref==3.2.3
 Django==3.0.4
 pytz==2019.3
