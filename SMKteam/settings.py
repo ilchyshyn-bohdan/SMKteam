@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'authentication',
+    'anycluster',
+
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -94,8 +96,12 @@ WSGI_APPLICATION = 'SMKteam.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'geo',
+        'USER': 'postgres',
+        'PASSWORD': 'root',
+        'HOST': '127.0.0.1',
+        'PORT': '',
     }
 }
 
@@ -146,10 +152,18 @@ ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+# GEOS and GDLA paths
+EOS_LIBRARY_PATH = 'C:/OSGeo4W64/bin/geos_c.dll'
+GDAL_LIBRARY_PATH = 'C:/OSGeo4W64/bin/gdal300.dll'
+GDAL_DATA = 'C:/OSGeo4W64/share/gdal'
+
+# Anycluster setting
+ANYCLUSTER_GEODJANGO_MODEL = "appname.model"
+ANYCLUSTER_COORDINATES_COLUMN = "coordinates" # example
