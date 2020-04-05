@@ -146,10 +146,17 @@ ACCOUNT_EMAIL_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'username'
 ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     )
 }
+
+# GEOS and GDLA paths
+EOS_LIBRARY_PATH = 'C:/OSGeo4W64/bin/geos_c.dll'
+GDAL_LIBRARY_PATH = 'C:/OSGeo4W64/bin/gdal300.dll'
+GDAL_DATA = 'C:/OSGeo4W64/share/gdal'
+
+
+
