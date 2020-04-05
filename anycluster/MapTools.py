@@ -18,7 +18,7 @@ class MapTools():
 
         # shoft mercator origin to bottom left
         # bottomleft of lnglat
-        BottomLeft_4326 = Point(-180, -85.05112878, srid=4326)
+        BottomLeft_4326 = Point(x=-180, y=-85.05112878, srid=4326)
         # bottomleft of mercator projection
         BottomLeft_Mercator = self.point_ToMercator(BottomLeft_4326)
 
