@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     'authentication',
+    'anycluster',
+
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -162,5 +164,6 @@ EOS_LIBRARY_PATH = 'C:/OSGeo4W64/bin/geos_c.dll'
 GDAL_LIBRARY_PATH = 'C:/OSGeo4W64/bin/gdal300.dll'
 GDAL_DATA = 'C:/OSGeo4W64/share/gdal'
 
-
-
+# Anycluster setting
+ANYCLUSTER_GEODJANGO_MODEL = "appname.model"
+ANYCLUSTER_COORDINATES_COLUMN = "coordinates" # example
