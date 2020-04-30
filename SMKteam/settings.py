@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
+    # 'django.contrib.gis',
+    'anymap',
     'authentication',
     'anycluster',
 
@@ -102,7 +103,8 @@ DATABASES = {
         'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '',
-    }
+    },
+
 }
 
 # Password validation
@@ -160,10 +162,27 @@ REST_FRAMEWORK = {
 }
 
 # GEOS and GDLA paths
-EOS_LIBRARY_PATH = 'C:/OSGeo4W64/bin/geos_c.dll'
-GDAL_LIBRARY_PATH = 'C:/OSGeo4W64/bin/gdal300.dll'
-GDAL_DATA = 'C:/OSGeo4W64/share/gdal'
+# GEOS_LIBRARY_PATH = 'C:/OSGeo4W64/bin/geos_c.dll'
+# GDAL_LIBRARY_PATH = 'C:/OSGeo4W64/bin/gdal300.dll'
+# GDAL_DATA = 'C:/OSGeo4W64/share/gdal'
+
+
+
+import os
+if os.name == 'nt':
+    import platform
+    OSGEO4W = r"C:\OSGeo4W"
+    if '64' in platform.architecture()[0]:
+        OSGEO4W += "64"
+    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+    os.environ['OSGEO4W_ROOT'] = OSGEO4W
+    os.environ['GDAL_DATA'] = "C:\Program Files\GDAL\gdal-data"
+    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+    GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal300'
+    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 
 # Anycluster setting
-ANYCLUSTER_GEODJANGO_MODEL = "appname.model"
-ANYCLUSTER_COORDINATES_COLUMN = "coordinates" # example
+ANYCLUSTER_GEODJANGO_MODEL = "anymap.Gardens"
+ANYCLUSTER_COORDINATES_COLUMN = "coordinates"
+ANYCLUSTER_FILTERS = ['rating', 'free_entrance', 'last_renewal']
+ANYCLUSTER_PINCOLUMN = 'style'

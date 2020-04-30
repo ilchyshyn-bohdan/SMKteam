@@ -449,6 +449,7 @@ class MapClusterer():
 
         filterstring = ''
 
+        print(filters)
         for filter in filters:
 
             column = list(filter.keys())[0]
