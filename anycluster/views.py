@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.core import serializers
@@ -11,11 +12,12 @@ import json
 
 
 class ClusterView(TemplateView):
-
+    @csrf_exempt
     def get_clusterer(self, request, zoom, grid_size, **kwargs):
         clusterer = MapClusterer(request, zoom, grid_size)
         return clusterer
 
+    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         zoom = kwargs['zoom']
         grid_size = kwargs['grid_size']
@@ -24,7 +26,7 @@ class ClusterView(TemplateView):
 
 
 class GridCluster(ClusterView):
-
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
 
         grid = self.clusterer.gridCluster()        
@@ -35,7 +37,7 @@ class GridCluster(ClusterView):
 
 
 class KmeansCluster(ClusterView):
-
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
 
         markers = self.clusterer.kmeansCluster()
@@ -51,6 +53,7 @@ class KmeansCluster(ClusterView):
     - json or html
 '''
 class EntriesJsonMixin:
+    @csrf_exempt
     def entries_as_json(self, entries):
 
         serializer_fields = self.clusterer.get_gis_field_names()
@@ -64,6 +67,7 @@ class GetClusterContent(EntriesJsonMixin, ClusterView):
 
     template_name = 'anycluster/clusterPopup.html'
 
+    @csrf_exempt
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
@@ -72,6 +76,7 @@ class GetClusterContent(EntriesJsonMixin, ClusterView):
 
         return context
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
 
@@ -89,6 +94,7 @@ class GetAreaContent(EntriesJsonMixin, ClusterView):
 
     template_name = 'anycluster/clusterPopup.html'
 
+    @csrf_exempt
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
@@ -97,6 +103,7 @@ class GetAreaContent(EntriesJsonMixin, ClusterView):
 
         return context
 
+    @csrf_exempt
     def post(self, request, *args, **kwargs):
         context = self.get_context_data(**kwargs)
 
