@@ -18,13 +18,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.request.method == 'PUT':
-            return [permissions.IsAuthenticated(), IsAccountOwner(),]
+            return [permissions.IsAuthenticated(), IsAccountOwner()]
 
         if self.request.method == 'POST':
             return [permissions.AllowAny()]
 
         if self.request.method == 'DELETE':
-            return [permissions.IsAuthenticated(), IsAccountOwner(),]
+            return [permissions.IsAuthenticated(), IsAccountOwner()]
 
         if self.request.method == 'GET':
             return [permissions.IsAuthenticated()]

@@ -10,7 +10,6 @@ from anycluster.MapClusterer import MapClusterer
 
 import json
 
-
 class ClusterView(TemplateView):
     @csrf_exempt
     def get_clusterer(self, request, zoom, grid_size, **kwargs):

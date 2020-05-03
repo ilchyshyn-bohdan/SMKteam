@@ -41,10 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     # 'django.contrib.gis',
-    'anymap',
     'authentication',
     'anycluster',
-
+    'models',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -100,13 +99,19 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'geo',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': '2305',
         'HOST': '127.0.0.1',
         'PORT': '',
     },
-
+    # 'UGE_db': {
+    #     'ENGINE': "django.db.backends.postgresql",
+    #     'NAME': 'models',
+    #     'USER': 'postgres',
+    #     'PASSWORD': '2305',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '',
+    # },
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -182,7 +187,7 @@ if os.name == 'nt':
     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
 
 # Anycluster setting
-ANYCLUSTER_GEODJANGO_MODEL = "anymap.Gardens"
+ANYCLUSTER_GEODJANGO_MODEL = "models.Ground"
 ANYCLUSTER_COORDINATES_COLUMN = "coordinates"
-ANYCLUSTER_FILTERS = ['rating', 'free_entrance', 'last_renewal']
-ANYCLUSTER_PINCOLUMN = 'style'
+ANYCLUSTER_FILTERS = ['ground_type']
+ANYCLUSTER_PINCOLUMN = 'ground_type'
