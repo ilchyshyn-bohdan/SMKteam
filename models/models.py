@@ -41,9 +41,9 @@ class Event(models.Model):
     name = models.CharField(max_length=50)
     date = models.DateTimeField(null=True)
     description = models.TextField(max_length=400, null=True)
-    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    creator = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name="creator")
     ground = models.ForeignKey(Ground, on_delete=models.CASCADE)
-#    users = models.ManyToManyField('authentication.User', null=True)
+    users = models.ManyToManyField('authentication.User', null=True, related_name='users')
     isPrivate = models.BooleanField(default=False)
 
     def __str__(self):

@@ -1,12 +1,14 @@
 from rest_framework import serializers
 from .models import Ground, Event, Response
+from authentication.models import User
 
 
 class EventSerializer(serializers.ModelSerializer):
+    users = serializers.PrimaryKeyRelatedField(queryset=User.objects.all(), many=True)
 
     class Meta:
         model = Event
-        fields = ('id', 'name', 'date', 'description', 'creator', 'ground')
+        fields = ('id', 'name', 'date', 'description', 'creator', 'users', 'ground')
 
 
 class ResponseSerializer(serializers.ModelSerializer):
