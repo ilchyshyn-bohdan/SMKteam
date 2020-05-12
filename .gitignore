@@ -2,3 +2,6 @@
 authentication/migrations
 __pycache__/
 db.sqlite3
+anymap
+venv
+models/migrations
