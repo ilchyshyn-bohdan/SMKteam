@@ -54,8 +54,20 @@ class Response(models.Model):
     date = models.DateTimeField(auto_now_add=True)
     text = models.TextField(max_length=450, null=True)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    ground = models.ForeignKey(Ground, on_delete=models.CASCADE, null=True)
     rating = models.IntegerField(null=True)
 
     def __str__(self):
         return self.text
+
+
+class UserResponse(models.Model):
+    date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(max_length=400, null=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    target = models.ForeignKey(User, related_name="target", on_delete=models.CASCADE)
+    rating = models.IntegerField(null=True)
+
+    def __str__(self):
+        return self.text
+

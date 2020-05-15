@@ -12,21 +12,21 @@ class GoogleLoginView(SocialLoginView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
-    lookup_field = 'username'
+    lookup_field = 'id'
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    # def get_permissions(self):
-    #     if self.request.method == 'PUT':
-    #         return [permissions.IsAuthenticated(), IsAccountOwner()]
-    #
-    #     if self.request.method == 'POST':
-    #         return [permissions.AllowAny()]
-    #
-    #     if self.request.method == 'DELETE':
-    #         return [permissions.IsAuthenticated(), IsAccountOwner()]
-    #
-    #     if self.request.method == 'GET':
-    #         return [permissions.IsAuthenticated()]
+    def get_permissions(self):
+        if self.request.method == 'PUT':
+            return [permissions.IsAuthenticated(), IsAccountOwner(),]
+
+        if self.request.method == 'POST':
+            return [permissions.AllowAny()]
+
+        if self.request.method == 'DELETE':
+            return [permissions.IsAuthenticated(), IsAccountOwner(),]
+
+        if self.request.method == 'GET':
+            return [permissions.IsAuthenticated()]
 
 

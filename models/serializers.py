@@ -18,6 +18,13 @@ class ResponseSerializer(serializers.ModelSerializer):
         fields = ("id", "date", "text", "creator", "event", "rating")
 
 
+class UserResponseSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Response
+        fields = ("id", "date", "text", "creator", "target", "rating")
+
+
 class GroundSerializer(serializers.ModelSerializer):
 
     class Meta:
