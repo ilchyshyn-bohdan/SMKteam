@@ -21,15 +21,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '6wlk##sfyz9#hat-%ngsw@r1730+^7e40%=dv0xjy4=$i5@hjw'
+# SECRET_KEY = '6wlk##sfyz9#hat-%ngsw@r1730+^7e40%=dv0xjy4=$i5@hjw'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '6wlk##sfyz9#hat-%ngsw@r1730+^7e40%=dv0xjy4=$i5@hjw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 # REST_USE_JWT = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['evort.herokuapp.com']
 # Application definition
 
 INSTALLED_APPS = [
@@ -99,7 +99,7 @@ DATABASES = {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
         'NAME': 'geo',
         'USER': 'postgres',
-        'PASSWORD': '2305',
+        'PASSWORD': 'root',
         'HOST': '127.0.0.1',
         'PORT': '',
     },
@@ -112,6 +112,16 @@ DATABASES = {
     #     'PORT': '',
     # },
 }
+
+DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+# ???????????????????????????????
+DATABASES['default']['ATOMIC_REQUESTS'] = True
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+
+if 'DATABASE_URL' in os.environ:  # please help me heroku gods
+    if 'postgres' in os.environ['DATABASE_URL']:
+        os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'].replace('postgres', 'postgis')
+
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -177,21 +187,26 @@ REST_FRAMEWORK = {
 
 
 
-import os
-if os.name == 'nt':
-    import platform
-    OSGEO4W = r"C:\OSGeo4W"
-    if '64' in platform.architecture()[0]:
-        OSGEO4W += "64"
-    assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
-    os.environ['OSGEO4W_ROOT'] = OSGEO4W
-    os.environ['GDAL_DATA'] = "C:\Program Files\GDAL\gdal-data"
-    os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
-    GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal300'
-    os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
-
+# import os
+# if os.name == 'nt':
+#     import platform
+#     OSGEO4W = r"C:\OSGeo4W"
+#     if '64' in platform.architecture()[0]:
+#         OSGEO4W += "64"
+#     assert os.path.isdir(OSGEO4W), "Directory does not exist: " + OSGEO4W
+#     os.environ['OSGEO4W_ROOT'] = OSGEO4W
+#     os.environ['GDAL_DATA'] = "C:\Program Files\GDAL\gdal-data"
+#     os.environ['PROJ_LIB'] = OSGEO4W + r"\share\proj"
+#     GDAL_LIBRARY_PATH = r'C:\OSGeo4W64\bin\gdal300'
+#     os.environ['PATH'] = OSGEO4W + r"\bin;" + os.environ['PATH']
+GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+GEOS_LIBRARY_PATH = os.environ.get('GEOS_LIBRARY_PATH')
+GDAL_DATA=os.environ.get('GDAL_DATA')
 # Anycluster setting
 ANYCLUSTER_GEODJANGO_MODEL = "models.Ground"
 ANYCLUSTER_COORDINATES_COLUMN = "coordinates"
-ANYCLUSTER_FILTERS = ['ground_type']
-ANYCLUSTER_PINCOLUMN = 'ground_type'
+# ANYCLUSTER_FILTERS = ['ground_type']
+# ANYCLUSTER_PINCOLUMN = 'ground_type'
+import django_heroku
+# Activate Django-Heroku.
+django_heroku.settings(locals())

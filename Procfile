@@ -1,0 +1,1 @@
+web: gunicorn SMKteam.wsgi --log-file -
