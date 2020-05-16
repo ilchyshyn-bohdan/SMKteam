@@ -15,10 +15,10 @@ class GroundViewSet(viewsets.ModelViewSet):
             return [permissions.IsAuthenticated(), permissions.IsAdminUser()]
 
         if self.request.method == "PUT":
-            return [permissions.IsAuthenticated(), permissions.IsAdminUser()]
+            return [permissions.IsAdminUser()]
 
         if self.request.method == "DELETE":
-            return [permissions.IsAuthenticated(), permissions.IsAdminUser()]
+            return [permissions.IsAdminUser()]
 
         if self.request.method == "GET":
             return [permissions.AllowAny()]
@@ -31,14 +31,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.request.method == "GET":
-            if self.request.ground.isPrivate:
-                if self.request.user in self.request.event.users:
-                    return True
-                else:
-                    return [permissions.IsAuthenticated(),
-                            (permissions.IsAdminUser() or isEventCreator())]
-            else:
-                return [permissions.AllowAny()]
+            return [permissions.AllowAny()]
 
         if self.request.method == "POST":
             return [permissions.IsAuthenticated()]
@@ -53,7 +46,7 @@ class EventViewSet(viewsets.ModelViewSet):
 
 
 class ResponseViewSet(viewsets.ModelViewSet):
-    lookup_field = "ground"
+    lookup_field = "id"
     queryset = Response.objects.all()
     serializer_class = ResponseSerializer
 
@@ -67,7 +60,7 @@ class ResponseViewSet(viewsets.ModelViewSet):
 
 
 class UserResponseViewSet(viewsets.ModelViewSet):
-    lookup_field = "target"
+    lookup_field = "id"
     queryset = UserResponse.objects.all()
     serializer_class = UserResponseSerializer
 
